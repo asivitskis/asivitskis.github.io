@@ -10,6 +10,115 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
+		<style>
+			/* --- Tab filter buttons --- */
+			.portfolio-filters {
+				display: flex;
+				gap: 0.6em;
+				margin-bottom: 2em;
+				flex-wrap: wrap;
+			}
+			.portfolio-filters button {
+				background: transparent;
+				border: 1px solid #ccc;
+				border-radius: 3px;
+				padding: 0.4em 1.1em;
+				font-size: 0.85em;
+				cursor: pointer;
+				letter-spacing: 0.05em;
+				text-transform: uppercase;
+				transition: background 0.2s, border-color 0.2s, color 0.2s;
+				color: inherit;
+			}
+			.portfolio-filters button:hover,
+			.portfolio-filters button.active {
+				background: #49bf9d;   /* matches Strata's default accent — adjust if you've changed it */
+				border-color: #49bf9d;
+				color: #fff;
+			}
+
+			/* --- Hide/show items --- */
+			.work-item {
+				transition: opacity 0.25s ease;
+			}
+			.work-item.hidden {
+				display: none;
+			}
+
+			/* --- Category badge on each card --- */
+			.category-badge {
+				display: inline-block;
+				font-size: 0.7em;
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+				padding: 0.2em 0.55em;
+				border-radius: 3px;
+				margin-bottom: 0.4em;
+				font-weight: 600;
+			}
+			.badge-applied {
+				background: #e8f5f1;
+				color: #2a7a5e;
+			}
+			.badge-educational {
+				background: #eef2fb;
+				color: #3055a4;
+			}
+
+			/* --- Thumbnail hover overlay --- */
+			.work-item .image.thumb {
+				position: relative;
+				display: block;
+				overflow: hidden;
+			}
+			.work-item .image.thumb::after {
+				content: attr(data-label);    /* pulls label from data-label attribute */
+				position: absolute;
+				inset: 0;
+				background: rgba(30, 30, 30, 0.68);
+				color: #fff;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				font-size: 0.9em;
+				letter-spacing: 0.06em;
+				text-transform: uppercase;
+				font-weight: 600;
+				opacity: 0;
+				transition: opacity 0.22s ease;
+				/* CSS doesn't support display:flex on ::after directly in all browsers,
+				so we use a trick: make it a block and use text-align + line-height */
+				text-align: center;
+				line-height: 1;
+				padding-top: calc(50% - 0.5em); /* vertically center single-line label */
+			}
+			.work-item .image.thumb:hover::after {
+				opacity: 1;
+			}
+			.work-item .image.thumb img {
+				transition: transform 0.3s ease;
+			}
+			.work-item .image.thumb:hover img {
+				transform: scale(1.04);
+			}
+
+			/* --- Secondary "View Folder" link for educational items --- */
+			.folder-link {
+				display: inline-block;
+				margin-top: 0.3em;
+				font-size: 0.82em;
+				color: #3055a4;
+				opacity: 0.8;
+				text-decoration: none;
+				border-bottom: 1px dashed currentColor;
+			}
+			.folder-link:hover {
+				opacity: 1;
+			}
+			.folder-link::before {
+				content: "📁 ";
+			}
+		</style>
 	</head>
 	<body class="is-preload">
 
@@ -41,40 +150,180 @@
 
 				<!-- Two -->
 					<section id="two">
-						<h2>Recent Work</h2>
-						<div class="row">
-							<article class="col-6 col-12-xsmall work-item">
-								<a href="images/fulls/011.jpg" class="image fit thumb"><img src="images/thumbs/011.jpg" alt="Interactive biodiversity center web map for Alabama" /></a>
-								<h3> <a href="https://asivitskis.github.io/OpenMaps/CBC_demo_map.html" target="_blank">View Project → Biodiversity Center Web Map</a></h3>
-								<p>Interactive, public-facing webmap created with MapLibreGL for a biodiversity center in Alabama.</p>
-							</article>
-							<article class="col-6 col-12-xsmall work-item">
-								<a href="images/fulls/022.jpg" class="image fit thumb"><img src="images/thumbs/022.jpg" alt="" /></a>
-								<h3> <a href="https://earth-inquiry-web-maps.streamlit.app/Restoration_Planner" target="_blank">View Project → Conservation Restoration Planner</a></h3>
-								<p>Demonstration web app to facilitate conservation restoration planning.</p>
-							</article>
-							<article class="col-6 col-12-xsmall work-item">
-								<a href="images/fulls/033.jpg" class="image fit thumb"><img src="images/thumbs/033.jpg" alt="" /></a>
-								<h3> <a href="https://asivitskis.github.io/OpenMaps/Boston_buildings.html" target="_blank">View Project → Boston Buildings Web Map</a></h3>
-								<p>Demonstration web map displaying 3D buildings using MapTiler Planet data.</p>
-							</article>
-							<article class="col-6 col-12-xsmall work-item">
-								<a href="images/fulls/044.jpg" class="image fit thumb"><img src="images/thumbs/044.jpg" alt="" /></a>
-								<h3> <a href="https://ee-sivitskisalex.projects.earthengine.app/view/fremont-irrigated-area" target="_blank">View Project → Fremont Irrigated Area Web App</a></h3>
-								<p>A Google Earth Engine web app to visualize changes in irrigation patterns in the Fremont County, WY.</p>
-							</article>
-							<article class="col-6 col-12-xsmall work-item">
-								<a href="images/fulls/055.jpg" class="image fit thumb"><img src="images/thumbs/055.jpg" alt="" /></a>
-								<h3> <a href="https://github.com/asivitskis/EarthInquiryLab/blob/main/1%20-%20Burn%20Severity%20Mapping%20with%20LeafMap/EI1%20-%20Wildfire%20Analysis%20Lesson.ipynb" target="_blank">View Project → Wyoming Wildfire Geoinquiry Notebook</a></h3>
-								<p>A student facing Jupyter Notebook to explore wildfire impacts from the 2024 Pack Trail incident.</p>
-							</article>
-							<article class="col-6 col-12-xsmall work-item">
-								<a href="images/fulls/066.jpg" class="image fit thumb"><img src="images/thumbs/066.jpg" alt="" /></a>
-								<h3> <a href="https://github.com/asivitskis/EarthInquiryLab/blob/main/2%20-%20Pipeline%20Explorer%20with%20GeoPandas/EI2%20-%20Pipeline%20Explorer%20Lesson.ipynb" target="_blank">View Project → Pipelines and Tribal Lands Geoinquiry Notebook</a></h3>
-								<p>A student facing Jupyter Notebook to explore the relationships between pipeline construction and tribal lands.</p>
-							</article>
-						</div>
-					</section>
+					<h2>Recent Work</h2>
+
+					<!-- Filter tabs -->
+					<div class="portfolio-filters">
+						<button class="active" data-filter="all">All</button>
+						<button data-filter="applied">Applied Projects</button>
+						<button data-filter="educational">Educational Resources</button>
+					</div>
+
+					<div class="row" id="portfolio-grid">
+
+						<!-- ── APPLIED PROJECTS (6) ──────────────────────────────────────── -->
+
+						<!-- Applied 1 -->
+						<article class="col-6 col-12-xsmall work-item" data-category="applied">
+						<a href="https://asivitskis.github.io/OpenMaps/CBC_demo_map.html"
+							class="image fit thumb"
+							data-label="Open Map"
+							target="_blank" rel="noopener">
+							<img src="images/thumbs/011.jpg" alt="Interactive biodiversity center web map for Alabama" />
+						</a>
+						<span class="category-badge badge-applied">Applied</span>
+						<h3><a href="https://asivitskis.github.io/OpenMaps/CBC_demo_map.html" target="_blank" rel="noopener">
+							Biodiversity Center Web Map
+						</a></h3>
+						<p>Interactive, public-facing webmap created with MapLibreGL for a biodiversity center in Alabama.</p>
+						</article>
+
+						<!-- Applied 2 -->
+						<article class="col-6 col-12-xsmall work-item" data-category="applied">
+						<a href="https://earth-inquiry-web-maps.streamlit.app/Restoration_Planner"
+							class="image fit thumb"
+							data-label="Open App"
+							target="_blank" rel="noopener">
+							<img src="images/thumbs/022.jpg" alt="Conservation restoration planner web app" />
+						</a>
+						<span class="category-badge badge-applied">Applied</span>
+						<h3><a href="https://earth-inquiry-web-maps.streamlit.app/Restoration_Planner" target="_blank" rel="noopener">
+							Conservation Restoration Planner
+						</a></h3>
+						<p>Demonstration web app to facilitate conservation restoration planning.</p>
+						</article>
+
+						<!-- Applied 3 -->
+						<article class="col-6 col-12-xsmall work-item" data-category="applied">
+						<a href="https://asivitskis.github.io/OpenMaps/Boston_buildings.html"
+							class="image fit thumb"
+							data-label="Open Map"
+							target="_blank" rel="noopener">
+							<img src="images/thumbs/033.jpg" alt="3D Boston buildings web map" />
+						</a>
+						<span class="category-badge badge-applied">Applied</span>
+						<h3><a href="https://asivitskis.github.io/OpenMaps/Boston_buildings.html" target="_blank" rel="noopener">
+							Boston Buildings Web Map
+						</a></h3>
+						<p>Demonstration web map displaying 3D buildings using MapTiler Planet data.</p>
+						</article>
+
+						<!-- Applied 4 -->
+						<article class="col-6 col-12-xsmall work-item" data-category="applied">
+						<a href="https://asivitskis.github.io/OpenMaps/wy-sma-viewer-simple.html"
+							class="image fit thumb"
+							data-label="Open App"
+							target="_blank" rel="noopener">
+							<img src="images/thumbs/a_03.jpg" alt="WY surface management area public lands map" />
+						</a>
+						<span class="category-badge badge-applied">Applied</span>
+						<h3><a href="https://asivitskis.github.io/OpenMaps/wy-sma-viewer-simple.html" target="_blank" rel="noopener">
+							WY Surface Management Area Public Lands Map
+						</a></h3>
+						<p>PM Tile hosted web map for visualizing surface management areas in Wyoming.</p>
+						</article>
+
+						<!-- Applied 5 — PLACEHOLDER -->
+						<article class="col-6 col-12-xsmall work-item" data-category="applied">
+						<a href="https://asivitskis.github.io/OpenMaps/ma-landscape-viewer.html"
+							class="image fit thumb"
+							data-label="Open App"
+							target="_blank" rel="noopener">
+							<img src="images/thumbs/a_02.jpg" alt="MA Landscape viewer" />
+						</a>
+						<span class="category-badge badge-applied">Applied</span>
+						<h3><a href="https://asivitskis.github.io/OpenMaps/ma-landscape-viewer.html" target="_blank" rel="noopener">
+							MA Landscape Viewer
+						</a></h3>
+						<p>MapLibre GL JS web app for visualizing landscape data in Massachusetts.</p>
+						</article>
+
+						<!-- Applied 6 — PLACEHOLDER -->
+						<article class="col-6 col-12-xsmall work-item" data-category="applied">
+						<a href="https://asivitskis.github.io/OpenMaps/ma-coastline-viewer.html"
+							class="image fit thumb"
+							data-label="Open App"
+							target="_blank" rel="noopener">
+							<img src="images/thumbs/a_01.jpg" alt="Beach grass restoration map viewer" />
+						</a>
+						<span class="category-badge badge-applied">Applied</span>
+						<h3><a href="https://asivitskis.github.io/OpenMaps/ma-coastline-viewer.html" target="_blank" rel="noopener">
+							MA Coastline Viewer
+						</a></h3>
+						<p>MapLibre GL JS web app for beach grass restoration project on Martha's Vineyard.</p>
+						</article>
+
+
+						<!-- ── EDUCATIONAL PIECES (4) ────────────────────────────────────── -->
+
+						<!-- Educational 1 -->
+						<article class="col-6 col-12-xsmall work-item" data-category="educational">
+						<a href="https://github.com/asivitskis/EarthInquiryLab/blob/main/1%20-%20Burn%20Severity%20Mapping%20with%20LeafMap/EI1%20-%20Wildfire%20Analysis%20Lesson.ipynb"
+							class="image fit thumb"
+							data-label="View Notebook"
+							target="_blank" rel="noopener">
+							<img src="images/thumbs/055.jpg" alt="Wyoming wildfire geoinquiry Jupyter notebook" />
+						</a>
+						<span class="category-badge badge-educational">Educational</span>
+						<h3><a href="https://github.com/asivitskis/EarthInquiryLab/blob/main/1%20-%20Burn%20Severity%20Mapping%20with%20LeafMap/EI1%20-%20Wildfire%20Analysis%20Lesson.ipynb" target="_blank" rel="noopener">
+							Wyoming Wildfire Geoinquiry Notebook
+						</a></h3>
+						<p>A student-facing Jupyter Notebook to explore wildfire impacts from the 2024 Pack Trail incident.</p>
+						</article>
+
+						<!-- Educational 2 -->
+						<article class="col-6 col-12-xsmall work-item" data-category="educational">
+						<a href="https://github.com/asivitskis/EarthInquiryLab/blob/main/2%20-%20Pipeline%20Explorer%20with%20GeoPandas/EI2%20-%20Pipeline%20Explorer%20Lesson.ipynb"
+							class="image fit thumb"
+							data-label="View Notebook"
+							target="_blank" rel="noopener">
+							<img src="images/thumbs/066.jpg" alt="Pipelines and tribal lands geoinquiry notebook" />
+						</a>
+						<span class="category-badge badge-educational">Educational</span>
+						<h3><a href="https://github.com/asivitskis/EarthInquiryLab/blob/main/2%20-%20Pipeline%20Explorer%20with%20GeoPandas/EI2%20-%20Pipeline%20Explorer%20Lesson.ipynb" target="_blank" rel="noopener">
+							Pipelines &amp; Tribal Lands Geoinquiry Notebook
+						</a></h3>
+						<p>A student-facing Jupyter Notebook exploring relationships between pipeline construction and tribal lands.</p>
+						</article>
+
+						<!-- Educational 3 — PLACEHOLDER (e.g. a Google Slides deck) -->
+						<article class="col-6 col-12-xsmall work-item" data-category="educational">
+						<a href="https://docs.google.com/presentation/d/1uy0--v0zyS3Pcz68YHGMaXKp5RXi8MnpARAwcxXw8mk/edit?usp=sharing"
+							class="image fit thumb"
+							data-label="View Slides"
+							target="_blank" rel="noopener">
+							<img src="images/thumbs/e_01.jpg" alt="Critical cartography example lesson slide deck" />
+						</a>
+						<span class="category-badge badge-educational">Educational</span>
+						<h3><a href="https://docs.google.com/presentation/d/1uy0--v0zyS3Pcz68YHGMaXKp5RXi8MnpARAwcxXw8mk/edit?usp=sharing" target="_blank" rel="noopener">
+							Critical Cartography Lesson in La Paz, Mexico
+						</a></h3>
+						<p>Lesson featuring Google Earth Engine to investigate landscape change over time.</p>
+						<a href="https://drive.google.com/drive/folders/1_M7NvW2VJnkpFh9R22GkxJErDx6JPIvU?usp=drive_link" class="folder-link" target="_blank" rel="noopener">
+							Full lesson materials folder
+						</a>
+						</article>
+
+						<!-- Educational 4 — PLACEHOLDER (e.g. another notebook or slides) -->
+						<article class="col-6 col-12-xsmall work-item" data-category="educational">
+						<a href="https://docs.google.com/presentation/d/1f_mIehGMgCQHfPK4yQLhiGE7olLO_CjnAP-VHdVqSsc/edit?usp=sharing"
+							class="image fit thumb"
+							data-label="View Slides"
+							target="_blank" rel="noopener">
+							<img src="images/thumbs/e_02.jpg" alt="Slide deck on coordinate systems" />
+						</a>
+						<span class="category-badge badge-educational">Educational</span>
+						<h3><a href="https://docs.google.com/presentation/d/1f_mIehGMgCQHfPK4yQLhiGE7olLO_CjnAP-VHdVqSsc/edit?usp=sharing" target="_blank" rel="noopener">
+							Coordinate Systems Lesson for Intro to GIS
+						</a></h3>
+						<p>A short demonstration lesson on coordinate systems for students in New Mexico.</p>
+						<a href="https://drive.google.com/drive/folders/1lJvijPtG5uOI3hmyg4KSOUAqhGrzBR_c?usp=drive_link" class="folder-link" target="_blank" rel="noopener">
+							Full lesson materials folder
+						</a>
+						</article>
+
+					</div><!-- /#portfolio-grid -->
+</section>
 
 				<!-- Three -->
 					<section id="three">
@@ -451,11 +700,35 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 
 		<!-- Scripts -->
 			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.poptrox.min.js"></script>
+			<!--<script src="assets/js/jquery.poptrox.min.js"></script>-->
 			<script src="assets/js/browser.min.js"></script>
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
+			<script>
+				(function () {
+					var buttons = document.querySelectorAll('.portfolio-filters button');
+					var items   = document.querySelectorAll('#portfolio-grid .work-item');
 
+					buttons.forEach(function (btn) {
+					btn.addEventListener('click', function () {
+						var filter = this.getAttribute('data-filter');
+
+						// Update active button
+						buttons.forEach(function (b) { b.classList.remove('active'); });
+						this.classList.add('active');
+
+						// Show/hide items
+						items.forEach(function (item) {
+						if (filter === 'all' || item.getAttribute('data-category') === filter) {
+							item.classList.remove('hidden');
+						} else {
+							item.classList.add('hidden');
+						}
+						});
+					});
+					});
+				})();
+				</script>
 	</body>
 </html>
